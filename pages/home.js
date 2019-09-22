@@ -16,6 +16,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Rating from '@material-ui/lab/Rating';
 import Grid from '@material-ui/core/Grid';
+import SwipeableViews from 'react-swipeable-views';
+import MobileStepper from '@material-ui/core/MobileStepper';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -40,25 +42,103 @@ const styles = theme => ({
     },
     divider: {
         marginTop: theme.spacing(2)
+    },
+    'search-version': {
+        background: 'rgba(0, 0, 255, 0.3)',
+        paddingTop: '30px',
+        paddingBottom: '60px'
+    },
+    'search-title': {
+        padding: '160px 0 30px 0'
+    },
+    'intro-section': {
+        marginTop: theme.spacing(2)
+    },
+    'intro-stepper': {
+        justifyContent: 'center',
+        padding: theme.spacing(2)
+    },
+    img: {
+      display: 'block',
+      overflow: 'hidden',
+      width: '100%',
+    },
+    'intro-stepper-dot': {
+        width: 16,
+        height: 16
     }
 });
 
+const tutorialSteps = [
+    {
+      label: 'San Francisco – Oakland Bay Bridge, United States',
+      imgPath:
+        'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
+    },
+    {
+      label: 'Bird',
+      imgPath:
+        'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
+    },
+    {
+      label: 'Bali, Indonesia',
+      imgPath:
+        'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80',
+    },
+    {
+      label: 'NeONBRAND Digital Marketing, Las Vegas, United States',
+      imgPath:
+        'https://images.unsplash.com/photo-1518732714860-b62714ce0c59?auto=format&fit=crop&w=400&h=250&q=60',
+    },
+    {
+      label: 'Goč, Serbia',
+      imgPath:
+        'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
+    }
+];
+  
+
 class Home extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            activeStep: 0,
+            maxSteps: tutorialSteps.length
+        }
+    }
+
+    setActiveStep = (step) => {
+        this.setState({ activeStep: step });
+    }
+
+    handleStepChange = (step) => {
+        this.setActiveStep(step);
+    }
+    
+    handleNext = () => {
+        this.setActiveStep(prevActiveStep => prevActiveStep + 1);
+    }
+
+    handleBack = () => {
+        this.setActiveStep(prevActiveStep => prevActiveStep - 1);
+    }
 
     render() {
         const { classes } = this.props;
+        const { activeStep,  maxSteps } = this.state;
         return(
             <div>
-                <AppBar position="static" color="secondary">
+                <AppBar position="static" color="primary">
                     <Toolbar>
                         <Typography variant="h6">
                             揪飯趣
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <Container maxWidth="md">
-                    <Box align="center" className={classes.box}>
-                        <Typography variant="h3">
+                <Container maxWidth={false} className={classes['search-version']}>
+                    <Container maxWidth="md">
+                        <Typography variant="h3" className={classes['search-title']}>
                             挑選您喜愛的菜單
                         </Typography>
                         <Paper className={classes.paper}>
@@ -71,7 +151,9 @@ class Home extends React.Component {
                                 <SearchIcon />
                             </IconButton>
                         </Paper>
-                    </Box>
+                    </Container>
+                </Container>
+                <Container maxWidth="md">
                     <Box className={classes.box}> 
                         <Typography variant="h6">
                             熱門菜單
@@ -244,6 +326,27 @@ class Home extends React.Component {
                             </Grid>
                         </Box>
                     </Box>
+                </Container>
+                <Container maxWidth="md" className={classes['intro-section']}>
+                    <SwipeableViews 
+                        index={activeStep}
+                        onChangeIndex={this.handleStepChange}
+                        enableMouseEvents>
+                        {tutorialSteps.map((step, index) => (
+                            <div key={step.label}>
+                                {Math.abs(activeStep - index) <= 2 ? (
+                                <img className={classes.img} src={step.imgPath} alt={step.label} />
+                                ) : null}
+                            </div>
+                        ))}
+                    </SwipeableViews>
+                    <MobileStepper
+                        variant="dots"
+                        steps={maxSteps}
+                        position="static"
+                        activeStep={activeStep}
+                        classes={{root: classes['intro-stepper'], dot: classes['intro-stepper-dot']}}
+                    />
                 </Container>
             </div>
         )
