@@ -22,12 +22,19 @@
   "homepage": "https://github.com/Kuan-Wei-Kuo/jo-fan-frontend#readme",
   "dependencies": {
     "@material-ui/core": "^4.4.2",
+    "@material-ui/icons": "^4.4.1",
+    "@material-ui/lab": "^4.0.0-alpha.26",
     "@material-ui/styles": "^4.4.1",
     "express": "^4.17.1",
+    "jss": "^9.8.7",
     "next": "^8.1.0",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-jss": "^8.6.1",
     "react-router-dom": "^5.0.1",
+    "react-swipeable-views": "^0.13.3",
+    "react-swipeable-views-utils": "^0.13.3",
     "styled-components": "^4.3.2"
   },
   "devDependencies": {
