@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Kuan-Wei-Kuo/jo-fan-frontend#readme",
   "dependencies": {
+    //material ui
     "@material-ui/core": "^4.4.2",
     "@material-ui/icons": "^4.4.1",
     "@material-ui/lab": "^4.0.0-alpha.26",
